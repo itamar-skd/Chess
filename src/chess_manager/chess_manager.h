@@ -3,6 +3,7 @@
 
 #include "piece_defines.h"
 #include <vector>
+#include <memory>
 
 #define BOARD_SIZE 8
 
@@ -13,7 +14,7 @@ class ChessManager final
         ~ChessManager() = default;
 
     private:
-        IChessPiece* __pieces[BOARD_SIZE][BOARD_SIZE];
+        std::unique_ptr<IChessPiece> __pieces[BOARD_SIZE][BOARD_SIZE];
 };
 
 #endif /* __CHESS_MANAGER_H__ */

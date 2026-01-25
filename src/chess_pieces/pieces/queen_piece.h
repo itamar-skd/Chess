@@ -1,5 +1,5 @@
-#ifndef __ROOK_PIECE_H__
-#define __ROOK_PIECE_H__
+#ifndef __QUEEN_PIECE_H__
+#define __QUEEN_PIECE_H__
 
 #include "chess_piece.h"
 
@@ -16,4 +16,4 @@ class QueenPiece final : IChessPiece
         bool move(uint32_t x, uint32_t y);
 };
 
-#endif /* __ROOK_PIECE_H__ */
+#endif /* __QUEEN_PIECE_H__ */

@@ -1,9 +1,21 @@
 SET(CHESS_PIECES_SOURCES
-    chess_piece.cpp
+    pieces/king_piece.cpp
+    pieces/queen_piece.cpp
+    pieces/pawn_piece.cpp
+    pieces/rook_piece.cpp
+    pieces/knight_piece.cpp
+    pieces/bishop_piece.cpp
 )
 
 set(CHESS_PIECES_HEADERS
-    chess_piece.h
+    pieces/chess_piece.h
+    pieces/king_piece.h
+    pieces/queen_piece.h
+    pieces/pawn_piece.h
+    pieces/rook_piece.h
+    pieces/knight_piece.h
+    pieces/bishop_piece.h
+    piece_defines.h
 )
 
 LIST(SORT CHESS_PIECES_SOURCES)

@@ -1,0 +1,6 @@
+#include "pieces/king_piece.h"
+#include "pieces/queen_piece.h"
+#include "pieces/knight_piece.h"
+#include "pieces/bishop_piece.h"
+#include "pieces/rook_piece.h"
+#include "pieces/pawn_piece.h"

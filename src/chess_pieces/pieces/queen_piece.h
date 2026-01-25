@@ -3,7 +3,7 @@
 
 #include "chess_piece.h"
 
-class QueenPiece final : IChessPiece
+class QueenPiece final : public IChessPiece
 {
     public:
         QueenPiece(bool is_enemy);

@@ -1,0 +1,2 @@
+add_subdirectory(chess_pieces)
+add_subdirectory(chess_manager)

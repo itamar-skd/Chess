@@ -6,7 +6,7 @@
 class QueenPiece final : public ChessPieceImpl
 {
     public:
-        QueenPiece(bool is_enemy);
+        QueenPiece(uint32_t x, uint32_t y, bool is_enemy) : ChessPieceImpl(x, y, is_enemy) {}
         ~QueenPiece() = default;
 
     protected:

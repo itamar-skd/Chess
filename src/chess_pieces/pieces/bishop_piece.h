@@ -6,7 +6,7 @@
 class BishopPiece final : public ChessPieceImpl
 {
     public:
-        BishopPiece(bool is_enemy);
+        BishopPiece(uint32_t x, uint32_t y, bool is_enemy) : ChessPieceImpl(x, y, is_enemy) {}
         ~BishopPiece() = default;
 
     protected:

@@ -6,7 +6,7 @@
 class RookPiece final : public ChessPieceImpl
 {
     public:
-        RookPiece(bool is_enemy);
+        RookPiece(uint32_t x, uint32_t y, bool is_enemy) : ChessPieceImpl(x, y, is_enemy) {}
         ~RookPiece() = default;
 
     protected:

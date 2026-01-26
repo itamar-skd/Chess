@@ -6,7 +6,7 @@
 class PawnPiece final : public ChessPieceImpl
 {
     public:
-        PawnPiece(bool is_enemy);
+        PawnPiece(uint32_t x, uint32_t y, bool is_enemy) : ChessPieceImpl(x, y, is_enemy) {}
         ~PawnPiece() = default;
 
     protected:

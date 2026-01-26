@@ -47,7 +47,15 @@ std::vector<Position> PawnPiece::all_possible_moves()
 {
     std::vector<Position> locations;
 
-    // TODO
+    for (size_t x = -1; x <= 1; x++)
+    {
+        for (size_t y = -1; y <= 1; y++)
+        {
+            Position cur(this->_pos.x + x, this->_pos.y + y);
+            if (can_move_to(cur))
+                locations.push_back(cur);
+        }
+    }
 
     return locations;
 }

@@ -9,6 +9,7 @@ SET(CHESS_PIECES_SOURCES
 
 set(CHESS_PIECES_HEADERS
     pieces/chess_piece.h
+    pieces/chess_piece_impl.h
     pieces/king_piece.h
     pieces/queen_piece.h
     pieces/pawn_piece.h

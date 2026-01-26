@@ -1,9 +1,9 @@
 #ifndef __ROOK_PIECE_H__
 #define __ROOK_PIECE_H__
 
-#include "chess_piece.h"
+#include "chess_piece_impl.h"
 
-class RookPiece final : public IChessPiece
+class RookPiece final : public ChessPieceImpl
 {
     public:
         RookPiece(bool is_enemy);

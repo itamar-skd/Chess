@@ -9,10 +9,8 @@ class KingPiece final : public ChessPieceImpl
         KingPiece(uint32_t x, uint32_t y, bool is_enemy) : ChessPieceImpl(x, y, is_enemy) {}
         ~KingPiece() = default;
 
-    protected:
-        bool _can_move_to(uint32_t x, uint32_t y);
-
-    public:
+public:
+        bool can_move_to(uint32_t x, uint32_t y);
         bool move(uint32_t x, uint32_t y);
 };
 

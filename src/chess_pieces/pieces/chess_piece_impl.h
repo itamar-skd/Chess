@@ -10,7 +10,7 @@ class ChessPieceImpl : public IChessPiece
         ~ChessPieceImpl() = default;
 
     protected:
-        virtual bool _can_move_to(uint32_t x, uint32_t y) = 0;
+        virtual bool can_move_to(uint32_t x, uint32_t y) = 0;
 
     public:
         virtual bool move(uint32_t x, uint32_t y) = 0;

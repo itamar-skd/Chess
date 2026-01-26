@@ -6,7 +6,7 @@
 class IChessPiece
 {
     protected:
-        virtual bool _can_move_to(uint32_t x, uint32_t y);
+        virtual bool can_move_to(uint32_t x, uint32_t y);
     public:
         virtual bool move(uint32_t x, uint32_t y);
 };

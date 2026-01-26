@@ -5,10 +5,9 @@
 
 class IChessPiece
 {
-    protected:
-        virtual bool can_move_to(uint32_t x, uint32_t y);
     public:
-        virtual bool move(uint32_t x, uint32_t y);
+        virtual bool can_move_to(uint32_t x, uint32_t y) = 0;
+        virtual bool move(uint32_t x, uint32_t y) = 0;
 };
 
 #endif /* __CHESS_PIECE_H__ */

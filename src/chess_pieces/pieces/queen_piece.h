@@ -9,9 +9,9 @@ class QueenPiece final : public ChessPieceImpl
         QueenPiece(uint32_t x, uint32_t y, bool is_enemy) : ChessPieceImpl(x, y, is_enemy) {}
         ~QueenPiece() = default;
 
-public:
-        bool can_move_to(uint32_t x, uint32_t y);
-        bool move(uint32_t x, uint32_t y);
+    public:
+        bool can_move_to(uint32_t x, uint32_t y) override;
+        bool move(uint32_t x, uint32_t y) override;
 };
 
 #endif /* __QUEEN_PIECE_H__ */

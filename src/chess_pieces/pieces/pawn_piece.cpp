@@ -36,4 +36,5 @@ bool PawnPiece::move(uint32_t x, uint32_t y)
     this->_x = x;
     this->_y = y;
     this->__is_first = false;
+    return true;
 }

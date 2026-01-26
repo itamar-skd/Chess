@@ -10,8 +10,8 @@ class PawnPiece final : public ChessPieceImpl
         ~PawnPiece() = default;
 
     public:
-        bool can_move_to(uint32_t x, uint32_t y);
-        bool move(uint32_t x, uint32_t y);
+        bool can_move_to(uint32_t x, uint32_t y) override;
+        bool move(uint32_t x, uint32_t y) override;
 
     private:
         bool __is_first;

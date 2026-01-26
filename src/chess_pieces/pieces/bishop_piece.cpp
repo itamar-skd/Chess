@@ -1,11 +1,11 @@
 #include "bishop_piece.h"
 
-bool BishopPiece::can_move_to(uint32_t x, uint32_t y)
+bool BishopPiece::can_move_to(Position pos)
 {
     return false; // TODO
 }
 
-bool BishopPiece::move(uint32_t x, uint32_t y)
+bool BishopPiece::move(Position pos)
 {
     return false; // TODO
 }

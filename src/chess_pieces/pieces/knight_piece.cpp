@@ -1,11 +1,11 @@
 #include "knight_piece.h"
 
-bool KnightPiece::can_move_to(uint32_t x, uint32_t y)
+bool KnightPiece::can_move_to(Position pos)
 {
     return false; // TODO
 }
 
-bool KnightPiece::move(uint32_t x, uint32_t y)
+bool KnightPiece::move(Position pos)
 {
     return false; // TODO
 }

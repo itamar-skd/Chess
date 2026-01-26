@@ -6,17 +6,16 @@
 class ChessPieceImpl : public IChessPiece
 {
     public:
-        ChessPieceImpl(uint32_t x, uint32_t y, bool is_enemy) : _x(x), _y(y), _is_enemy(is_enemy) {}
+        ChessPieceImpl(Position pos, bool is_enemy) : _pos(pos), _is_enemy(is_enemy) {}
         ~ChessPieceImpl() = default;
 
     public:
-        virtual bool can_move_to(uint32_t x, uint32_t y) = 0;
-        virtual bool move(uint32_t x, uint32_t y) = 0;
+        virtual bool can_move_to(Position pos) = 0;
+        virtual bool move(Position pos) = 0;
 
     protected:
         bool _is_enemy;
-        uint32_t _x;
-        uint32_t _y;
+        Position _pos;
 };
 
 #endif /* __CHESS_PIECE_IMPL_H__ */

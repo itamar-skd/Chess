@@ -1,9 +1,9 @@
 #ifndef __QUEEN_PIECE_H__
 #define __QUEEN_PIECE_H__
 
-#include "chess_piece.h"
+#include "chess_piece_impl.h"
 
-class QueenPiece final : public IChessPiece
+class QueenPiece final : public ChessPieceImpl
 {
     public:
         QueenPiece(bool is_enemy);

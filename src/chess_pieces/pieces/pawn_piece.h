@@ -1,9 +1,9 @@
 #ifndef __PAWN_PIECE_H__
 #define __PAWN_PIECE_H__
 
-#include "chess_piece.h"
+#include "chess_piece_impl.h"
 
-class PawnPiece final : public IChessPiece
+class PawnPiece final : public ChessPieceImpl
 {
     public:
         PawnPiece(bool is_enemy);

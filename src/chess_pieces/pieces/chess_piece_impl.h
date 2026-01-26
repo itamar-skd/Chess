@@ -6,17 +6,31 @@
 class ChessPieceImpl : public IChessPiece
 {
     public:
-        ChessPieceImpl(uint32_t x, uint32_t y, bool is_enemy) : _x(x), _y(y), _is_enemy(is_enemy) {}
+        ChessPieceImpl(Position pos, bool is_enemy) : _pos(pos), _is_enemy(is_enemy) {}
         ~ChessPieceImpl() = default;
 
     public:
-        virtual bool can_move_to(uint32_t x, uint32_t y) = 0;
-        virtual bool move(uint32_t x, uint32_t y) = 0;
+        /**
+         * @brief checks if the piece can be moved to a given position
+         * @returns true if the piece can be moved to that position, false otherwise
+         */
+        virtual bool can_move_to(Position pos) = 0;
+
+        /**
+         * @brief moves the piece to a given position if possible
+         * @returns true if the piece was moved, false otherwise (see can_move_to)
+         */
+        virtual bool move(Position pos) = 0;
+
+        /**
+         * @brief get all the possible moves a piece can make
+         * @returns all possible locations
+         */
+        virtual std::vector<Position> all_possible_moves() = 0;
 
     protected:
         bool _is_enemy;
-        uint32_t _x;
-        uint32_t _y;
+        Position _pos;
 };
 
 #endif /* __CHESS_PIECE_IMPL_H__ */

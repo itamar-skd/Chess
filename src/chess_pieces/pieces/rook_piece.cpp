@@ -1,11 +1,20 @@
 #include "rook_piece.h"
 
-bool RookPiece::can_move_to(uint32_t x, uint32_t y)
+bool RookPiece::can_move_to(Position pos)
 {
     return false; // TODO
 }
 
-bool RookPiece::move(uint32_t x, uint32_t y)
+bool RookPiece::move(Position pos)
 {
     return false; // TODO
+}
+
+std::vector<Position> RookPiece::all_possible_moves()
+{
+    std::vector<Position> locations;
+
+    // TODO
+
+    return locations;
 }

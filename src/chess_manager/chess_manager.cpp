@@ -2,9 +2,9 @@
 
 ChessManager::ChessManager()
 {
-    for (size_t y = 0; y < BOARD_SIZE; y++)
+    for (size_t y = 0; y < CHESS_BOARD_SIZE; y++)
     {
-        for (size_t x = 0; x < BOARD_SIZE; x++)
+        for (size_t x = 0; x < CHESS_BOARD_SIZE; x++)
         {
             this->__pieces[y][x] = nullptr;
         }
@@ -20,7 +20,7 @@ ChessManager::ChessManager()
     this->__pieces[0][6] = std::make_unique<KnightPiece>(6, 0, false);
     this->__pieces[0][7] = std::make_unique<RookPiece>(7, 0, false);
 
-    for (int x = 0; x < BOARD_SIZE; ++x) {
+    for (int x = 0; x < CHESS_BOARD_SIZE; ++x) {
         this->__pieces[1][x] = std::make_unique<PawnPiece>(x, 1, false);
     }
 
@@ -34,7 +34,7 @@ ChessManager::ChessManager()
     this->__pieces[7][6] = std::make_unique<KnightPiece>(6, 7, true);
     this->__pieces[7][7] = std::make_unique<RookPiece>(7, 7, true);
 
-    for (int x = 0; x < BOARD_SIZE; ++x) {
+    for (int x = 0; x < CHESS_BOARD_SIZE; ++x) {
         this->__pieces[6][x] = std::make_unique<PawnPiece>(x, 6, true);
     }
 }

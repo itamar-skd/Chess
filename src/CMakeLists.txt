@@ -1,2 +1,3 @@
+add_subdirectory(core)
 add_subdirectory(chess_pieces)
 add_subdirectory(chess_manager)

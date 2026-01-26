@@ -6,14 +6,12 @@
 class BishopPiece final : public ChessPieceImpl
 {
     public:
-        BishopPiece(bool is_enemy);
+        BishopPiece(uint32_t x, uint32_t y, bool is_enemy) : ChessPieceImpl(x, y, is_enemy) {}
         ~BishopPiece() = default;
 
-    protected:
-        bool _can_move_to(uint32_t x, uint32_t y);
-
     public:
-        bool move(uint32_t x, uint32_t y);
+        bool can_move_to(uint32_t x, uint32_t y) override;
+        bool move(uint32_t x, uint32_t y) override;
 };
 
 #endif /* __BISHOP_PIECE_H__ */

@@ -6,14 +6,15 @@
 class PawnPiece final : public ChessPieceImpl
 {
     public:
-        PawnPiece(bool is_enemy);
+        PawnPiece(uint32_t x, uint32_t y, bool is_enemy);
         ~PawnPiece() = default;
 
-    protected:
-        bool _can_move_to(uint32_t x, uint32_t y);
-
     public:
-        bool move(uint32_t x, uint32_t y);
+        bool can_move_to(uint32_t x, uint32_t y) override;
+        bool move(uint32_t x, uint32_t y) override;
+
+    private:
+        bool __is_first;
 };
 
 #endif /* __PAWN_PIECE_H__ */

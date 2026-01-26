@@ -6,14 +6,12 @@
 class KnightPiece final : public ChessPieceImpl
 {
     public:
-        KnightPiece(bool is_enemy);
+        KnightPiece(uint32_t x, uint32_t y, bool is_enemy) : ChessPieceImpl(x, y, is_enemy) {}
         ~KnightPiece() = default;
 
-    protected:
-        bool _can_move_to(uint32_t x, uint32_t y);
-
     public:
-        bool move(uint32_t x, uint32_t y);
+        bool can_move_to(uint32_t x, uint32_t y) override;
+        bool move(uint32_t x, uint32_t y) override;
 };
 
 #endif /* __KNIGHT_PIECE_H__ */

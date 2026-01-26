@@ -2,10 +2,10 @@
 
 bool PawnPiece::_can_move_to(uint32_t x, uint32_t y)
 {
-    // TODO
+    return false; // TODO
 }
 
 bool PawnPiece::move(uint32_t x, uint32_t y)
 {
-    // TODO
+    return false; // TODO
 }

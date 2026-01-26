@@ -2,10 +2,10 @@
 
 bool KingPiece::_can_move_to(uint32_t x, uint32_t y)
 {
-    // TODO
+    return false; // TODO
 }
 
 bool KingPiece::move(uint32_t x, uint32_t y)
 {
-    // TODO
+    return false; // TODO
 }

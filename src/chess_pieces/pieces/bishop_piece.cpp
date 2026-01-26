@@ -9,3 +9,12 @@ bool BishopPiece::move(Position pos)
 {
     return false; // TODO
 }
+
+std::vector<Position> BishopPiece::all_possible_moves()
+{
+    std::vector<Position> locations;
+
+    // TODO
+
+    return locations;
+}

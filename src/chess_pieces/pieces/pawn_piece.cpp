@@ -42,3 +42,12 @@ bool PawnPiece::move(Position pos)
     this->__is_first = false;
     return true;
 }
+
+std::vector<Position> PawnPiece::all_possible_moves()
+{
+    std::vector<Position> locations;
+
+    // TODO
+
+    return locations;
+}

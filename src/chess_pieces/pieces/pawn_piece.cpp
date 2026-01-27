@@ -49,18 +49,18 @@ std::vector<Position> PawnPiece::all_possible_moves()
 
     if (this->__is_first)
     {
-        for (size_t y = 1; y <= 2; y++)
+        for (int dy = 1; dy <= 2; dy++)
         {
-            Position cur(this->_pos.x, this->_pos.y + y);
+            Position cur(this->_pos.x, this->_pos.y + dy);
             if (can_move_to(cur))
                 locations.push_back(cur);
         }
         return locations;
     }
 
-    for (size_t x = -1; x <= 1; x++)
+    for (int dx = -1; dx <= 1; dx++)
     {
-        Position cur(this->_pos.x + x, this->_pos.y + 1);
+        Position cur(this->_pos.x + dx, this->_pos.y + 1);
         if (can_move_to(cur))
             locations.push_back(cur);
     }

@@ -6,7 +6,7 @@
 class ChessPieceImpl : public IChessPiece
 {
     public:
-        ChessPieceImpl(Position pos, bool is_enemy) : _pos(pos), _is_enemy(is_enemy) {}
+        ChessPieceImpl(Position pos, bool is_enemy) : _pos(pos), _is_enemy(is_enemy), _is_first(false) {}
         ~ChessPieceImpl() = default;
 
     public:
@@ -28,9 +28,12 @@ class ChessPieceImpl : public IChessPiece
          */
         virtual std::vector<Position> all_possible_moves() = 0;
 
+        inline bool has_moved() const override { return !this->_is_first; }
+
     protected:
         bool _is_enemy;
         Position _pos;
+        bool _is_first;
 };
 
 #endif /* __CHESS_PIECE_IMPL_H__ */

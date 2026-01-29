@@ -24,6 +24,8 @@ class IChessPiece
          * @brief get all the possible moves a piece can make
          * @returns all possible locations         */
         virtual std::vector<Position> all_possible_moves() = 0;
+
+        virtual bool has_moved() const = 0;
 };
 
 #endif /* __CHESS_PIECE_H__ */

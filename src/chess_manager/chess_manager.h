@@ -12,6 +12,9 @@ class ChessManager final
         ChessManager();
         ~ChessManager() = default;
 
+    public:
+        bool move(Position from, Position to);
+
     private:
         std::unique_ptr<IChessPiece> __pieces[CHESS_BOARD_SIZE][CHESS_BOARD_SIZE];
 };

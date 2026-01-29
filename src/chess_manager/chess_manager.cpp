@@ -1,5 +1,6 @@
 #include "chess_manager.h"
 #include "position.h"
+#include <cmath>
 
 ChessManager::ChessManager()
 {
@@ -38,4 +39,44 @@ ChessManager::ChessManager()
     for (int x = 0; x < CHESS_BOARD_SIZE; ++x) {
         this->__pieces[6][x] = std::make_unique<PawnPiece>(Position(x, 6), true);
     }
+}
+
+bool ChessManager::move(Position from, Position to)
+{
+    IChessPiece* piece = this->__pieces[from.y, from.x]->get();
+    if (piece == nullptr)
+        return false;
+
+    if (!piece->can_move_to(to))
+        return false;
+
+    if (KingPiece* k = dynamic_cast<KingPiece*>(piece))
+    {
+        // Attempting to castle
+        if (abs(to.x - from.x) == 2 && to.y == from.y)
+        {
+            if (piece->has_moved())
+                return false;
+
+            int distance_to_rook = (to.x > from.x) ? (CHESS_BOARD_SIZE - 1) - from.x : -1 * (from.x - 1);
+            IChessPiece* rook = this->__pieces[from.y, from.x + distance_to_rook]->get();
+
+            if (RookPiece* r = dynamic_cast<RookPiece*>(rook));
+            {
+                if (rook->has_moved())
+                    return false;
+
+                int i = distance_to_rook > 0 ? 1 : -1;
+                while (i != distance_to_rook)
+                {
+                    if (this->__pieces[from.y, from.x + i]->get() != nullptr)
+                        return false;
+
+                    i += (distance_to_rook > 0) ? 1 : -1; 
+                }
+            }
+        }
+    }
+
+    return true;
 }

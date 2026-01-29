@@ -43,7 +43,7 @@ ChessManager::ChessManager()
 
 bool ChessManager::move(Position from, Position to)
 {
-    IChessPiece* piece = this->__pieces[from.y, from.x]->get();
+    IChessPiece* piece = this->__pieces[from.y][from.x].get();
     if (piece == nullptr)
         return false;
 
@@ -59,24 +59,32 @@ bool ChessManager::move(Position from, Position to)
                 return false;
 
             int distance_to_rook = (to.x > from.x) ? (CHESS_BOARD_SIZE - 1) - from.x : -1 * (from.x - 1);
-            IChessPiece* rook = this->__pieces[from.y, from.x + distance_to_rook]->get();
+            IChessPiece* rook = this->__pieces[from.y][from.x + distance_to_rook].get();
 
-            if (RookPiece* r = dynamic_cast<RookPiece*>(rook));
+            if (dynamic_cast<RookPiece*>(rook) == nullptr)
+                return false;
+
+            if (rook->has_moved())
+                return false;
+
+            // Check that all spots between rook and king are empty
+            int dx = distance_to_rook > 0 ? 1 : -1;
+            while (dx != distance_to_rook)
             {
-                if (rook->has_moved())
+                if (this->__pieces[from.y][from.x + dx].get() != nullptr)
                     return false;
 
-                int i = distance_to_rook > 0 ? 1 : -1;
-                while (i != distance_to_rook)
-                {
-                    if (this->__pieces[from.y, from.x + i]->get() != nullptr)
-                        return false;
-
-                    i += (distance_to_rook > 0) ? 1 : -1; 
-                }
+                dx += (distance_to_rook > 0) ? 1 : -1; 
             }
+
+            Position rook_pos(from.x + 1, from.y);
+            rook->move(rook_pos);
+            this->__pieces[rook_pos.y][rook_pos.x] = std::move(this->__pieces[from.y][from.x + distance_to_rook]);
         }
     }
+
+    piece->move(to);
+    this->__pieces[to.y][to.x] = std::move(this->__pieces[from.y][from.x]);
 
     return true;
 }

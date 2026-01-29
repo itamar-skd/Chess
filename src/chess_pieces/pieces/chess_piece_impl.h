@@ -6,7 +6,7 @@
 class ChessPieceImpl : public IChessPiece
 {
     public:
-        ChessPieceImpl(Position pos, bool is_enemy) : _pos(pos), _is_enemy(is_enemy), _is_first(false) {}
+        ChessPieceImpl(Position pos, bool is_enemy) : _pos(pos), _is_enemy(is_enemy), _is_first(true) {}
         ~ChessPieceImpl() = default;
 
     public:

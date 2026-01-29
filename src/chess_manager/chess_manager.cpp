@@ -43,6 +43,9 @@ ChessManager::ChessManager()
 
 bool ChessManager::move(Position from, Position to)
 {
+    if (from.y >= CHESS_BOARD_SIZE || from.x >= CHESS_BOARD_SIZE || to.x >= CHESS_BOARD_SIZE || to.y >= CHESS_BOARD_SIZE)
+        return false;
+
     IChessPiece* piece = this->__pieces[from.y][from.x].get();
     if (piece == nullptr)
         return false;
@@ -82,6 +85,11 @@ bool ChessManager::move(Position from, Position to)
             this->__pieces[rook_pos.y][rook_pos.x] = std::move(this->__pieces[from.y][from.x + distance_to_rook]);
         }
     }
+
+    // Check for capturing. If both pieces are on the same team, then return false. Otherwise, capture the piece.
+    IChessPiece* possible_capture = this->__pieces[to.y][to.x].get();
+    if (possible_capture != nullptr && possible_capture->is_enemy() == piece->is_enemy())
+        return false;
 
     piece->move(to);
     this->__pieces[to.y][to.x] = std::move(this->__pieces[from.y][from.x]);

@@ -38,6 +38,8 @@ class ChessPieceImpl : public IChessPiece
 
         inline bool has_moved() const override { return !this->_is_first; }
 
+        inline bool is_enemy() const override { return this->_is_enemy; }
+
     protected:
         bool _is_enemy;
         Position _pos;

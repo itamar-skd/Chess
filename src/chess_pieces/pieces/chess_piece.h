@@ -22,10 +22,17 @@ class IChessPiece
 
         /**
          * @brief get all the possible moves a piece can make
-         * @returns all possible locations         */
+         * @returns all possible locations
+         */
         virtual std::vector<Position> all_possible_moves() = 0;
 
+        /**
+         * @brief check if the piece has moved at least once
+         * @returns true if the piece has moved, false otherwise
+         */
         virtual bool has_moved() const = 0;
+
+        virtual bool is_enemy() const = 0;
 };
 
 #endif /* __CHESS_PIECE_H__ */

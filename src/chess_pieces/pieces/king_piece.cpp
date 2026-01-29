@@ -21,17 +21,6 @@ bool KingPiece::can_move_to(Position pos)
     return false;
 }
 
-bool KingPiece::move(Position pos)
-{
-    if (!this->can_move_to(pos))
-        return false;
-
-    this->_pos.x = pos.x;
-    this->_pos.y = pos.y;
-    this->_is_first = false;
-    return true;
-}
-
 std::vector<Position> KingPiece::all_possible_moves()
 {
     std::vector<Position> locations;

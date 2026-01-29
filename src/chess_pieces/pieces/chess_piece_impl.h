@@ -20,7 +20,15 @@ class ChessPieceImpl : public IChessPiece
          * @brief moves the piece to a given position if possible
          * @returns true if the piece was moved, false otherwise (see can_move_to)
          */
-        virtual bool move(Position pos) = 0;
+        bool move(Position pos) override
+        {
+            if (!this->can_move_to(pos))
+                return false;
+
+            this->_pos = pos;
+            this->_is_first = false;
+            return true;
+        }
 
         /**
          * @brief get all the possible moves a piece can make

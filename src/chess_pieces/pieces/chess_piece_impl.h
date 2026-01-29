@@ -6,7 +6,7 @@
 class ChessPieceImpl : public IChessPiece
 {
     public:
-        ChessPieceImpl(Position pos, bool is_enemy) : _pos(pos), _is_enemy(is_enemy) {}
+        ChessPieceImpl(Position pos, bool is_enemy) : _pos(pos), _is_enemy(is_enemy), _is_first(true) {}
         ~ChessPieceImpl() = default;
 
     public:
@@ -20,7 +20,15 @@ class ChessPieceImpl : public IChessPiece
          * @brief moves the piece to a given position if possible
          * @returns true if the piece was moved, false otherwise (see can_move_to)
          */
-        virtual bool move(Position pos) = 0;
+        bool move(Position pos) override
+        {
+            if (!this->can_move_to(pos))
+                return false;
+
+            this->_pos = pos;
+            this->_is_first = false;
+            return true;
+        }
 
         /**
          * @brief get all the possible moves a piece can make
@@ -28,9 +36,14 @@ class ChessPieceImpl : public IChessPiece
          */
         virtual std::vector<Position> all_possible_moves() = 0;
 
+        inline bool has_moved() const override { return !this->_is_first; }
+
+        inline bool is_enemy() const override { return this->_is_enemy; }
+
     protected:
         bool _is_enemy;
         Position _pos;
+        bool _is_first;
 };
 
 #endif /* __CHESS_PIECE_IMPL_H__ */

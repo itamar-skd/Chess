@@ -32,17 +32,6 @@ bool PawnPiece::can_move_to(Position pos)
     return false;
 }
 
-bool PawnPiece::move(Position pos)
-{
-    if (!this->can_move_to(pos))
-        return false;
-
-    this->_pos.x = pos.y;
-    this->_pos.y = pos.y;
-    this->__is_first = false;
-    return true;
-}
-
 std::vector<Position> PawnPiece::all_possible_moves()
 {
     std::vector<Position> locations;

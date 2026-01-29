@@ -9,7 +9,7 @@ bool KingPiece::can_move_to(Position pos)
 
     // Castling - Whether the king can castle must be decide by the module that holds the chess board.
     // No piece on its own should be aware of its surroundings.
-    if (this->__is_first)
+    if (this->_is_first)
     {
         if (abs(pos.x - this->_pos.x) == 2 && pos.y == this->_pos.y)
             return true;
@@ -21,23 +21,13 @@ bool KingPiece::can_move_to(Position pos)
     return false;
 }
 
-bool KingPiece::move(Position pos)
-{
-    if (!this->can_move_to(pos))
-        return false;
-
-    this->_pos.x = pos.x;
-    this->_pos.y = pos.y;
-    return true;
-}
-
 std::vector<Position> KingPiece::all_possible_moves()
 {
     std::vector<Position> locations;
 
     // Castling - Whether the king can castle must be decide by the module that holds the chess board.
     // No piece on its own should be aware of its surroundings.
-    if (this->__is_first)
+    if (this->_is_first)
     {
         for (int dx = -2; dx <= 2; dx += 4)
         {

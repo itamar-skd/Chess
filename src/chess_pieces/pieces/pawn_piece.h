@@ -17,12 +17,6 @@ class PawnPiece final : public ChessPieceImpl
         bool can_move_to(Position pos) override;
 
         /**
-         * @brief moves the piece to a given position if possible
-         * @returns true if the piece was moved, false otherwise (see can_move_to)
-         */
-        bool move(Position pos) override;
-
-        /**
          * @brief get all the possible moves a piece can make
          * @returns all possible locations
          */

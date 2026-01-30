@@ -6,7 +6,7 @@
 class KnightPiece final : public ChessPieceImpl
 {
     public:
-        KnightPiece(Position pos, bool is_enemy) : ChessPieceImpl(pos, is_enemy) {}
+        KnightPiece(Position pos);
         ~KnightPiece() = default;
 
     public:

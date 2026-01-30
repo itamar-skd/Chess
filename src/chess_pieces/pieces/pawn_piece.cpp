@@ -1,10 +1,8 @@
 #include "pawn_piece.h"
-#include "game_settings.h"
 #include <cmath>
 
-PawnPiece::PawnPiece(Position pos, bool is_enemy)
-    : ChessPieceImpl(pos, is_enemy)
-    , __is_first(true)
+PawnPiece::PawnPiece(Position pos)
+    : ChessPieceImpl(E_ChessPiece::PAWN, pos)
 {
     
 }
@@ -26,7 +24,7 @@ bool PawnPiece::can_move_to(Position pos)
     if (pos.y - this->_pos.y == 1)
         return true;
 
-    if (pos.y - this->_pos.y == 2 && this->__is_first)
+    if (pos.y - this->_pos.y == 2 && this->_is_first)
         return true;
 
     return false;
@@ -36,7 +34,7 @@ std::vector<Position> PawnPiece::all_possible_moves()
 {
     std::vector<Position> locations;
 
-    if (this->__is_first)
+    if (this->_is_first)
     {
         for (int dy = 1; dy <= 2; dy++)
         {

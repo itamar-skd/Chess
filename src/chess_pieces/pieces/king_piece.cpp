@@ -1,6 +1,12 @@
 #include "king_piece.h"
-#include "game_settings.h"
+#include "game_defines.h"
 #include <cmath>
+
+KingPiece::KingPiece(Position pos)
+    : ChessPieceImpl(E_ChessPiece::KING, pos)
+{
+    
+}
 
 bool KingPiece::can_move_to(Position pos)
 {

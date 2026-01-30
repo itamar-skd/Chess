@@ -6,7 +6,7 @@
 class RookPiece final : public ChessPieceImpl
 {
     public:
-        RookPiece(Position pos, bool is_enemy) : ChessPieceImpl(pos, is_enemy) {}
+        RookPiece(Position pos);
         ~RookPiece() = default;
 
     public:

@@ -6,7 +6,7 @@
 class BishopPiece final : public ChessPieceImpl
 {
     public:
-        BishopPiece(Position pos, bool is_enemy) : ChessPieceImpl(pos, is_enemy) {}
+        BishopPiece(Position pos);
         ~BishopPiece() = default;
 
     public:

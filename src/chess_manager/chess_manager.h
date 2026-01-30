@@ -2,7 +2,7 @@
 #define __CHESS_MANAGER_H__
 
 #include "piece_defines.h"
-#include "game_settings.h"
+#include "game_defines.h"
 #include <vector>
 #include <memory>
 

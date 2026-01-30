@@ -6,7 +6,7 @@
 class KingPiece final : public ChessPieceImpl
 {
     public:
-        KingPiece(Position pos, bool is_enemy) : ChessPieceImpl(pos, is_enemy) {}
+        KingPiece(Position pos);
         ~KingPiece() = default;
 
     public:

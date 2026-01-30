@@ -6,7 +6,7 @@
 class QueenPiece final : public ChessPieceImpl
 {
     public:
-        QueenPiece(Position pos, bool is_enemy) : ChessPieceImpl(pos, is_enemy) {}
+        QueenPiece(Position pos);
         ~QueenPiece() = default;
 
     public:

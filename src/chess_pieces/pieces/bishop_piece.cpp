@@ -1,5 +1,11 @@
 #include "bishop_piece.h"
 
+BishopPiece::BishopPiece(Position pos)
+    : ChessPieceImpl(E_ChessPiece::BISHOP, pos)
+{
+    
+}
+
 bool BishopPiece::can_move_to(Position pos)
 {
     return false; // TODO

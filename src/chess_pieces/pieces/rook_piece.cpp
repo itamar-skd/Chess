@@ -19,3 +19,8 @@ std::vector<Position> RookPiece::all_possible_moves()
 
     return locations;
 }
+
+const char* RookPiece::drawing() const
+{
+    return ""; // TODO!
+}

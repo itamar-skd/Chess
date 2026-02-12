@@ -19,3 +19,8 @@ std::vector<Position> BishopPiece::all_possible_moves()
 
     return locations;
 }
+
+const char* BishopPiece::drawing() const
+{
+    return ""; // TODO!
+}

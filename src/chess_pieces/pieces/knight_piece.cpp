@@ -19,3 +19,8 @@ std::vector<Position> KnightPiece::all_possible_moves()
 
     return locations;
 }
+
+const char* KnightPiece::drawing() const
+{
+    return ""; // TODO!
+}

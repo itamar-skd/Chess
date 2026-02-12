@@ -44,6 +44,12 @@ class IChessPiece
          * @returns the piece's role
          */
         virtual E_ChessPiece kind() const = 0;
+
+        /**
+         * @brief get a drawing of the piece
+         * @returns a string of the piece's drawing
+         */
+        virtual const char* drawing() const = 0;
 };
 
 #endif /* __CHESS_PIECE_H__ */

@@ -54,3 +54,8 @@ std::vector<Position> PawnPiece::all_possible_moves()
 
     return locations;
 }
+
+const char* PawnPiece::drawing() const
+{
+    return ""; // TODO!
+}

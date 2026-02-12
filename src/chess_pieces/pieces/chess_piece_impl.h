@@ -55,6 +55,12 @@ class ChessPieceImpl : public IChessPiece
          */
         inline E_ChessPiece kind() const override { return this->_kind; }
 
+        /**
+         * @brief get a drawing of the piece
+         * @returns a string of the piece's drawing
+         */
+        const char* drawing() const = 0;
+
     protected:
         E_ChessPiece _kind;
         const bool _is_enemy;

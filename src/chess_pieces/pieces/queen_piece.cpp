@@ -19,3 +19,8 @@ std::vector<Position> QueenPiece::all_possible_moves()
 
     return locations;
 }
+
+const char* QueenPiece::drawing() const
+{
+    return ""; // TODO!
+}

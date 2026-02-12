@@ -14,6 +14,7 @@ class ChessManager final
 
     public:
         bool move(Position from, Position to);
+        inline IChessPiece* get_piece(Position pos) { return this->__pieces[pos.y][pos.x].get(); }
 
     private:
         std::unique_ptr<IChessPiece> __pieces[CHESS_BOARD_SIZE][CHESS_BOARD_SIZE];

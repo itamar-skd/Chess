@@ -21,6 +21,12 @@ class QueenPiece final : public ChessPieceImpl
          * @returns all possible locations
          */
         std::vector<Position> all_possible_moves() override;
+
+        /**
+         * @brief get a drawing of the piece
+         * @returns a string of the piece's drawing
+         */
+        const char* drawing() const override;
 };
 
 #endif /* __QUEEN_PIECE_H__ */

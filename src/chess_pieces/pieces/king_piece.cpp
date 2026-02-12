@@ -59,3 +59,8 @@ std::vector<Position> KingPiece::all_possible_moves()
 
     return locations;
 }
+
+const char* KingPiece::drawing() const
+{
+    return ""; // TODO!
+}

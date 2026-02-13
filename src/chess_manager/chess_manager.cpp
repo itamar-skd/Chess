@@ -2,6 +2,7 @@
 #include "position.h"
 #include <cmath>
 #include <ncurses.h>
+#include <algorithm>
 
 ChessManager::ChessManager()
 {
@@ -55,68 +56,40 @@ std::vector<Position> ChessManager::move(Position from, Position to)
     if (!piece->can_move_to(to))
         return changed_cells;
 
-    bool try_capturing = true;
-    if (piece->kind() == E_ChessPiece::PAWN)
-    {
-        // trying to capture
-        if (to.x != from.x)
-        {
-            if (this->__pieces[to.y][to.x] == nullptr)
-                return changed_cells;
-        }
-        // trying to capture but the enemy is infront of the pawn
-        else if (this->__pieces[to.y][to.x] != nullptr)
-            return changed_cells;
-        // just trying to move
-        else
-            try_capturing = false;
-    }
-    else if (piece->kind() == E_ChessPiece::KING)
-    {
-        // Attempting to castle
-        if (abs(to.x - from.x) == 2 && to.y == from.y)
-        {
-            if (piece->has_moved())
-                return changed_cells;
+    std::vector<Position> all_possible_moves = this->all_possible_moves(from);
+    if (all_possible_moves.size() == 0)
+        return changed_cells;
 
-            mvprintw(1, 0, "hi");
-            int distance_to_rook = (to.x > from.x) ? (CHESS_BOARD_SIZE - 1) - from.x : -1 * (from.x - 1);
+    // all_possible_moves returns all of the moves a piece can make. if `to` isn't in that list, then it's not a valid move.
+    if (std::find(all_possible_moves.begin(), all_possible_moves.end(), to) == all_possible_moves.end())
+        return changed_cells;
+
+    // piece-specific checks
+    if (piece->kind() == E_ChessPiece::KING)
+    {
+        // Castling
+        if (abs(from.x - to.x) >= 2)
+        {
+            bool direction = from.x > to.x; // true = left, false = right
+            int distance_to_rook = direction ? -4 : 3;
             IChessPiece* rook = this->__pieces[from.y][from.x + distance_to_rook].get();
+            if (rook == nullptr)
+                return changed_cells; // THIS SHOULD NEVER BE REACHABLE!
 
-            if (rook->kind() != E_ChessPiece::ROOK)
-                return changed_cells;
-
-            mvprintw(2, 0, "hi");
-            if (rook->has_moved())
-                return changed_cells;
-
-            mvprintw(3, 0, "hi");
-            // Check that all spots between rook and king are empty
-            int dx = distance_to_rook > 0 ? 1 : -1;
-            while (dx != distance_to_rook)
-            {
-                if (this->__pieces[from.y][from.x + dx].get() != nullptr)
-                    return changed_cells;
-
-                dx += (distance_to_rook > 0) ? 1 : -1; 
-            }
-
-            mvprintw(4, 0, "hi");
-            Position rook_pos(from.x + 1, from.y);
+            Position rook_pos(from.x + (direction ? -1 : 1), from.y);
             rook->move(rook_pos);
+            mvprintw(1, 0, "hi");
+            refresh();
             this->__pieces[rook_pos.y][rook_pos.x] = std::move(this->__pieces[from.y][from.x + distance_to_rook]);
             changed_cells.push_back(Position(from.x + distance_to_rook, from.y));
             changed_cells.push_back(rook_pos);
         }
     }
 
-    if (try_capturing)
-    {
-        // Check for capturing. If both pieces are on the same team, then return false. Otherwise, capture the piece.
-        IChessPiece* possible_capture = this->__pieces[to.y][to.x].get();
-        if (possible_capture != nullptr && possible_capture->is_enemy() == piece->is_enemy())
-            return changed_cells;
-    }
+    // Check for capturing. If both pieces are on the same team, then return false. Otherwise, capture the piece.
+    IChessPiece* possible_capture = this->__pieces[to.y][to.x].get();
+    if (possible_capture != nullptr && possible_capture->is_enemy() == piece->is_enemy())
+        return changed_cells;
 
     piece->move(to);
     this->__pieces[to.y][to.x] = std::move(this->__pieces[from.y][from.x]);
@@ -128,46 +101,70 @@ std::vector<Position> ChessManager::move(Position from, Position to)
 
 std::vector<Position> ChessManager::all_possible_moves(Position pos) const
 {
-    std::vector<Position> all_moves;
+    std::vector<Position> moves;
     if (pos.x > CHESS_BOARD_SIZE || pos.y >= CHESS_BOARD_SIZE)
-        return all_moves;
+        return moves;
 
     IChessPiece* piece = this->__pieces[pos.y][pos.x].get();
-    std::vector<Position> moves = piece->all_possible_moves();
+    moves = piece->all_possible_moves();
 
-    for (Position& move : moves)
+    for (std::vector<Position>::iterator it = moves.begin(); it != moves.end();)
     {
-        IChessPiece* move_piece = this->__pieces[move.y][move.x].get();
+        IChessPiece* move_piece = this->__pieces[it->y][it->x].get();
         if (piece->kind() == E_ChessPiece::PAWN)
         {
-            if (move.x == pos.x)
+            if (it->x == pos.x)
             {
-                if (move_piece == nullptr)
-                    all_moves.push_back(move);
+                if (move_piece != nullptr)
+                {
+                    moves.erase(it);
+                    continue;
+                }
             }
             // capturing moves
-            else if (abs(move.x - pos.x) == 1)
+            else if (abs(it->x - pos.x) == 1)
             {
-                if ((move_piece != nullptr) && (move_piece->is_enemy() != piece->is_enemy()))
-                    all_moves.push_back(move);
+                if ((move_piece == nullptr) || (move_piece->is_enemy() == piece->is_enemy()))
+                {
+                    moves.erase(it);
+                    continue;
+                }
             }
         }
         else if (piece->kind() == E_ChessPiece::KING)
         {
+            if (abs(it->x - pos.x) == 1 || abs(it->y - pos.y) == 1)
+            {
+                IChessPiece* to_piece = this->__pieces[it->y][it->x].get();
+                if (to_piece != nullptr && to_piece->is_enemy() == piece->is_enemy())
+                {
+                    moves.erase(it);
+                    continue;
+                }
+            }
             // Castling
-            if (abs(move.x - pos.x) == 2 && move.y == pos.y)
+            else if (abs(it->x - pos.x) == 2 && it->y == pos.y)
             {
                 if (piece->has_moved())
+                {
+                    moves.erase(it);
                     continue;
+                }
 
-                int distance_to_rook = (move.x > pos.x) ? (CHESS_BOARD_SIZE - 1) - pos.x : -1 * (pos.x - 1);
+                int distance_to_rook = (it->x > pos.x) ? (CHESS_BOARD_SIZE - 1) - pos.x : -1 * (pos.x - 1);
                 IChessPiece* rook = this->__pieces[pos.y][pos.x + distance_to_rook].get();
 
                 if (rook->kind() != E_ChessPiece::ROOK)
+                {
+                    moves.erase(it);
                     continue;
+                }
 
                 if (rook->has_moved())
+                {
+                    moves.erase(it);
                     continue;
+                }
 
                 // Check that all spots between rook and king are empty
                 int dx = distance_to_rook > 0 ? 1 : -1;
@@ -181,12 +178,15 @@ std::vector<Position> ChessManager::all_possible_moves(Position pos) const
                 }
 
                 if (!can_move)
+                {
+                    moves.erase(it);
                     continue;
-
-                all_moves.push_back(move);
+                }
             }
         }
+
+        it++;
     }
 
-    return all_moves;
+    return moves;
 }

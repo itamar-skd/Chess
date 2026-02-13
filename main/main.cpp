@@ -8,5 +8,6 @@ int main(int argc, char** argv)
     interface.initialize();
     interface.join();
     interface.stop();
+
     return 0;
 }

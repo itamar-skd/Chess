@@ -21,10 +21,10 @@ bool PawnPiece::can_move_to(Position pos)
         return false;
     }
 
-    if (pos.y - this->_pos.y == 1)
+    if ((pos.y - this->_pos.y) * (this->_is_enemy ? 1 : -1) == 1)
         return true;
 
-    if (pos.y - this->_pos.y == 2 && this->_is_first)
+    if ((pos.y - this->_pos.y) * (this->_is_enemy ? 1 : -1) == 2 && this->_is_first)
         return true;
 
     return false;
@@ -38,7 +38,7 @@ std::vector<Position> PawnPiece::all_possible_moves()
     {
         for (int dy = 1; dy <= 2; dy++)
         {
-            Position cur(this->_pos.x, this->_pos.y + dy);
+            Position cur(this->_pos.x, this->_pos.y + dy * (this->_is_enemy ? 1 : -1));
             if (can_move_to(cur))
                 locations.push_back(cur);
         }
@@ -47,7 +47,7 @@ std::vector<Position> PawnPiece::all_possible_moves()
 
     for (int dx = -1; dx <= 1; dx++)
     {
-        Position cur(this->_pos.x + dx, this->_pos.y + 1);
+        Position cur(this->_pos.x + dx, this->_pos.y + (this->_is_enemy ? 1 : -1));
         if (can_move_to(cur))
             locations.push_back(cur);
     }

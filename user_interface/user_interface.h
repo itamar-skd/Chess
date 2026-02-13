@@ -3,6 +3,7 @@
 
 #include "chess_manager.h"
 #include <ncurses.h>
+#include <thread>
 
 class UserInterface final
 {
@@ -14,11 +15,20 @@ class UserInterface final
         void __draw_piece(size_t x, size_t y);
         void __draw_board();
 
+    private:
+        void __run();
+
     public:
         void initialize();
         void stop();
+        inline void join() { this->__thrd.join(); }
     
     private:
+        /* thread */
+            bool __keep_alive;
+            std::thread __thrd;
+        
+        /* manager */
         ChessManager __manager;
 };
 

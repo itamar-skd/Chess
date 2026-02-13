@@ -14,6 +14,7 @@ class ChessManager final
 
     public:
         bool move(Position from, Position to);
+        inline std::vector<Position> all_possible_moves(Position pos) { return this->__pieces[pos.y][pos.x]->all_possible_moves(); }
         inline IChessPiece* get_piece(Position pos) { return this->__pieces[pos.y][pos.x].get(); }
 
     private:

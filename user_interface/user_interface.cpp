@@ -9,14 +9,21 @@ UserInterface::UserInterface()
 
 }
 
-void draw_tile(int y, int x, int color_pair)
+void draw_tile(int x, int y, int color_pair)
 {
     attron(COLOR_PAIR(color_pair));
     for (int dy = 0; dy < CHESS_BOARD_CELL_LENGTH; ++dy)
         for (int dx = 0; dx < CHESS_BOARD_CELL_WIDTH; ++dx)
-            mvaddwstr(y * 8 + dy, x * CHESS_BOARD_CELL_WIDTH+ dx, L"■");
+            mvaddwstr(y * CHESS_BOARD_CELL_LENGTH + dy, x * CHESS_BOARD_CELL_WIDTH + dx, L"■");
     attroff(COLOR_PAIR(color_pair));
-    refresh();
+}
+
+void draw_tile(int x, int y)
+{
+    if (x % 2 != y % 2)
+        draw_tile(x, y, 0);
+    else
+        draw_tile(x, y, 1);
 }
 
 void UserInterface::__draw_piece(size_t x, size_t y)
@@ -44,22 +51,81 @@ void UserInterface::__draw_piece(size_t x, size_t y)
 
 void UserInterface::__draw_board()
 {
-    for (int row = 0; row < 8; ++row)
+    for (int row = 0; row < CHESS_BOARD_SIZE; ++row)
     {
-        for (int col = 0; col < 8; ++col)
+        for (int col = 0; col < CHESS_BOARD_SIZE; ++col)
         {
-            if (row % 2 != col % 2)
-                draw_tile(row, col, 0);
-            else
-                draw_tile(row, col, 1);
-
+            draw_tile(col, row);
             this->__draw_piece(col, row);
-            refresh();
         }
     }
 }
 
+void UserInterface::__run()
+{
+    MEVENT event;
+    int ch;
 
+    std::vector<Position> all_drawn_last;
+    bool selected = false;
+
+    while (this->__keep_alive && (ch = getch()) != 'q')
+    {
+        if (ch == KEY_MOUSE)
+        {
+            if (getmouse(&event) == OK)
+            {
+                if (event.bstate & BUTTON1_CLICKED)
+                {
+                    // mvprintw(0, 0, "left click detected at: y=%d, x=%d", event.y, event.x);
+                    size_t x = (event.x - event.x % CHESS_BOARD_CELL_WIDTH) / CHESS_BOARD_CELL_WIDTH;
+                    size_t y = (event.y - event.y % CHESS_BOARD_CELL_LENGTH) / CHESS_BOARD_CELL_LENGTH;
+                    Position cur_pos(x, y);
+
+                    if (x > CHESS_BOARD_SIZE || y > CHESS_BOARD_SIZE)
+                        continue;
+
+                    if (this->__manager.get_piece(cur_pos) == nullptr)
+                    {
+                        // TODO: Add moving and capturing
+                        continue;
+                    }
+
+                    if (selected)
+                    {
+                        for (Position& pos : all_drawn_last)
+                        {
+                            /* redraw last tile */
+                            draw_tile(pos.x, pos.y);
+                            this->__draw_piece(pos.x, pos.y);
+                        }
+                    }
+
+                    all_drawn_last.clear();
+
+                    /* draw new tile */
+                    draw_tile(x, y, 3);
+                    this->__draw_piece(x, y);
+                    all_drawn_last.push_back(cur_pos);
+                    selected = true;
+
+                    std::vector<Position> all_possible_moves = this->__manager.all_possible_moves(cur_pos);
+                    for (Position& pos : all_possible_moves)
+                    {
+                        draw_tile(pos.x, pos.y, 2);
+                        this->__draw_piece(pos.x, pos.y);
+                        all_drawn_last.push_back(pos);
+                    }
+
+                    refresh();
+                }
+            }
+        }
+    }
+
+    /* end the ncurses window */
+    endwin();
+}
 
 void UserInterface::initialize()
 {
@@ -67,6 +133,7 @@ void UserInterface::initialize()
     initscr(); /* initialize curses mode */
     use_default_colors();
     start_color();
+    raw();
     keypad(stdscr, TRUE); // Enable special keys (arrows, etc.)
     mousemask(ALL_MOUSE_EVENTS | REPORT_MOUSE_POSITION, NULL);
     noecho();
@@ -80,9 +147,17 @@ void UserInterface::initialize()
     init_pair(4, COLOR_GREEN, -1);
     this->__draw_board();
     refresh();
+
+    /* initialize the thread */
+    this->__keep_alive = true;
+    this->__thrd = std::thread(&UserInterface::__run, this);
 }
 
 void UserInterface::stop()
 {
+    this->__keep_alive = false;
+    if (this->__thrd.joinable())
+        this->__thrd.join();
+
     endwin();
 }

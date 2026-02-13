@@ -6,7 +6,7 @@
 class RookPiece final : public ChessPieceImpl
 {
     public:
-        RookPiece(Position pos, bool is_enemy) : ChessPieceImpl(pos, is_enemy) {}
+        RookPiece(Position pos);
         ~RookPiece() = default;
 
     public:
@@ -21,6 +21,12 @@ class RookPiece final : public ChessPieceImpl
          * @returns all possible locations
          */
         std::vector<Position> all_possible_moves() override;
+
+        /**
+         * @brief get a drawing of the piece
+         * @returns a string of the piece's drawing
+         */
+        const std::vector<std::string>& drawing() const override;
 };
 
 #endif /* __ROOK_PIECE_H__ */

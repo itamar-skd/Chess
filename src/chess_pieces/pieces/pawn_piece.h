@@ -6,7 +6,7 @@
 class PawnPiece final : public ChessPieceImpl
 {
     public:
-        PawnPiece(Position pos, bool is_enemy);
+        PawnPiece(Position pos);
         ~PawnPiece() = default;
 
     public:
@@ -22,8 +22,11 @@ class PawnPiece final : public ChessPieceImpl
          */
         std::vector<Position> all_possible_moves() override;
 
-    private:
-        bool __is_first;
+        /**
+         * @brief get a drawing of the piece
+         * @returns a string of the piece's drawing
+         */
+        const std::vector<std::string>& drawing() const override;
 };
 
 #endif /* __PAWN_PIECE_H__ */

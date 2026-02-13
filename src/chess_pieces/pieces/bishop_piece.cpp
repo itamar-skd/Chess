@@ -1,5 +1,11 @@
 #include "bishop_piece.h"
 
+BishopPiece::BishopPiece(Position pos)
+    : ChessPieceImpl(E_ChessPiece::BISHOP, pos)
+{
+    
+}
+
 bool BishopPiece::can_move_to(Position pos)
 {
     return false; // TODO
@@ -12,4 +18,16 @@ std::vector<Position> BishopPiece::all_possible_moves()
     // TODO
 
     return locations;
+}
+
+const std::vector<std::string>& BishopPiece::drawing() const
+{
+    static const std::vector<std::string> art = {
+        " o ",
+        " (^) ",
+        " -=H=- ",
+        " ] [ ",
+        " /___\\ "
+    };
+    return art;
 }

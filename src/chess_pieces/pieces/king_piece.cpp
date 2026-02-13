@@ -1,6 +1,12 @@
 #include "king_piece.h"
-#include "game_settings.h"
+#include "game_defines.h"
 #include <cmath>
+
+KingPiece::KingPiece(Position pos)
+    : ChessPieceImpl(E_ChessPiece::KING, pos)
+{
+    
+}
 
 bool KingPiece::can_move_to(Position pos)
 {
@@ -15,8 +21,20 @@ bool KingPiece::can_move_to(Position pos)
             return true;
     }
 
-    if (abs(this->_pos.x - pos.x) <= 1 && abs(this->_pos.y - pos.y) <= 1)
-        return true;
+    if (abs(this->_pos.x - pos.x) > 1)
+        return false;
+    
+    
+    if (this->_is_enemy)
+    {
+        if (pos.y - this->_pos.y <= 1)
+            return true;
+    }
+    else
+    {
+        if (this->_pos.y - pos.y <= 1)
+            return true;
+    }
 
     return false;
 }
@@ -52,4 +70,18 @@ std::vector<Position> KingPiece::all_possible_moves()
     }
 
     return locations;
+}
+
+const std::vector<std::string>& KingPiece::drawing() const
+{
+    static const std::vector<std::string> art = {
+        " + ",
+        " ( ) ",
+        " / \\ ",
+        " | | ",
+        " { } ",
+        " {___} "
+    };
+
+    return art;
 }

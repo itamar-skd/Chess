@@ -2,8 +2,10 @@
 #define __CHESS_PIECE_H__
 
 #include "position.h"
+#include "game_defines.h"
 #include <cstdint>
 #include <vector>
+#include <string>
 
 class IChessPiece
 {
@@ -27,12 +29,28 @@ class IChessPiece
         virtual std::vector<Position> all_possible_moves() = 0;
 
         /**
-         * @brief check if the piece has moved at least once
+         * @brief check if this piece has moved at least once
          * @returns true if the piece has moved, false otherwise
          */
         virtual bool has_moved() const = 0;
 
-        virtual bool is_enemy() const = 0;
+        /**
+         * @brief check if this piece belongs to the enemy. enemies are assigned by the constructor if their y-coordinate is smaller than half the chess board's height
+         * @returns true if the piece is an enemy, false otherwise
+         */
+        virtual const bool is_enemy() const = 0;
+
+        /**
+         * @brief check this piece's role, see E_ChessPiece
+         * @returns the piece's role
+         */
+        virtual E_ChessPiece kind() const = 0;
+
+        /**
+         * @brief get a drawing of the piece
+         * @returns a string of the piece's drawing
+         */
+        virtual const std::vector<std::string>& drawing() const = 0;
 };
 
 #endif /* __CHESS_PIECE_H__ */

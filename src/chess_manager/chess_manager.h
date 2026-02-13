@@ -2,7 +2,7 @@
 #define __CHESS_MANAGER_H__
 
 #include "piece_defines.h"
-#include "game_settings.h"
+#include "game_defines.h"
 #include <vector>
 #include <memory>
 
@@ -13,7 +13,9 @@ class ChessManager final
         ~ChessManager() = default;
 
     public:
-        bool move(Position from, Position to);
+        std::vector<Position> move(Position from, Position to);
+        std::vector<Position> all_possible_moves(Position pos) const;
+        inline IChessPiece* get_piece(Position pos) { return this->__pieces[pos.y][pos.x].get(); }
 
     private:
         std::unique_ptr<IChessPiece> __pieces[CHESS_BOARD_SIZE][CHESS_BOARD_SIZE];

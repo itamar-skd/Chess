@@ -2,11 +2,12 @@
 #define __CHESS_PIECE_IMPL_H__
 
 #include "chess_piece.h"
+#include <iostream>
 
 class ChessPieceImpl : public IChessPiece
 {
     public:
-        ChessPieceImpl(Position pos, bool is_enemy) : _pos(pos), _is_enemy(is_enemy), _is_first(true) {}
+        ChessPieceImpl(E_ChessPiece kind, Position pos) : _kind(kind), _pos(pos), _is_enemy(pos.y < CHESS_BOARD_SIZE / 2), _is_first(true) {}
         ~ChessPieceImpl() = default;
 
     public:
@@ -36,12 +37,33 @@ class ChessPieceImpl : public IChessPiece
          */
         virtual std::vector<Position> all_possible_moves() = 0;
 
+        /**
+         * @brief check if this piece has moved at least once
+         * @returns true if the piece has moved, false otherwise
+         */
         inline bool has_moved() const override { return !this->_is_first; }
 
-        inline bool is_enemy() const override { return this->_is_enemy; }
+        /**
+         * @brief check if this piece belongs to the enemy. enemies are assigned by the constructor if their y-coordinate is smaller than half the chess board's height
+         * @returns true if the piece is an enemy, false otherwise
+         */
+        inline const bool is_enemy() const override { return this->_is_enemy; }
+
+        /**
+         * @brief check this piece's role, see E_ChessPiece
+         * @returns the piece's role
+         */
+        inline E_ChessPiece kind() const override { return this->_kind; }
+
+        /**
+         * @brief get a drawing of the piece
+         * @returns a string of the piece's drawing
+         */
+        const std::vector<std::string>& drawing() const = 0;
 
     protected:
-        bool _is_enemy;
+        E_ChessPiece _kind;
+        const bool _is_enemy;
         Position _pos;
         bool _is_first;
 };

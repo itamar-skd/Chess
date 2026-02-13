@@ -53,7 +53,7 @@ void UserInterface::__draw_board()
             else
                 draw_tile(row, col, 1);
 
-
+            this->__draw_piece(col, row);
             refresh();
         }
     }

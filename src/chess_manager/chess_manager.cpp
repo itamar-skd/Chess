@@ -117,6 +117,14 @@ std::vector<Position> ChessManager::all_possible_moves(Position pos) const
                     moves.erase(it);
                     continue;
                 }
+                if (abs(it->y - pos.y) == 2)
+                {
+                    if (this->__pieces[it->y + (piece->is_enemy() ? -1 : 1)][it->x] != nullptr)
+                    {
+                        moves.erase(it);
+                        continue;
+                    }
+                }
             }
             // capturing moves
             else if (abs(it->x - pos.x) == 1)

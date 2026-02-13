@@ -85,10 +85,22 @@ void UserInterface::__run()
                     if (x > CHESS_BOARD_SIZE || y > CHESS_BOARD_SIZE)
                         continue;
 
-                    if (this->__manager.get_piece(cur_pos) == nullptr)
+                    bool moved = false;
+                    IChessPiece* cur_piece = this->__manager.get_piece(cur_pos);
+
+                    if (selected && all_drawn_last.size() != 0)
                     {
-                        // TODO: Add moving and capturing
-                        continue;
+                        if (this->__manager.get_piece(all_drawn_last[0])->can_move_to(cur_pos))
+                        {
+                            std::vector<Position> changed_cells = this->__manager.move(all_drawn_last[0], cur_pos);
+                            for (Position& cell : changed_cells)
+                            {
+                                draw_tile(cell.x, cell.y);
+                                this->__draw_piece(cell.x, cell.y);   
+                            }
+
+                            moved = true;
+                        }
                     }
 
                     if (selected)
@@ -99,9 +111,14 @@ void UserInterface::__run()
                             draw_tile(pos.x, pos.y);
                             this->__draw_piece(pos.x, pos.y);
                         }
+
+                        selected = false;
                     }
 
                     all_drawn_last.clear();
+
+                    if (moved)
+                        continue;
 
                     /* draw new tile */
                     draw_tile(x, y, 3);

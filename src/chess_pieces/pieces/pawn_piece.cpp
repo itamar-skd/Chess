@@ -15,7 +15,7 @@ bool PawnPiece::can_move_to(Position pos)
     // A pawn moves only forwards when not trying to capture OR diagonally when capturing
     if (this->_pos.x != pos.x)
     {
-        if ((abs(this->_pos.x - pos.x) == 1) && pos.y - this->_pos.y == 1)
+        if ((abs(this->_pos.x - pos.x) == 1) && (pos.y - this->_pos.y) * (this->_is_enemy ? 1 : -1) == 1)
             return true;
 
         return false;

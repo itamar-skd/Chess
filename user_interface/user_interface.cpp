@@ -101,6 +101,8 @@ void UserInterface::__run()
 
                             moved = true;
                         }
+                        else
+                            continue;
                     }
 
                     if (selected)

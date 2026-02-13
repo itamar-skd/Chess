@@ -26,7 +26,7 @@ class PawnPiece final : public ChessPieceImpl
          * @brief get a drawing of the piece
          * @returns a string of the piece's drawing
          */
-        const char* drawing() const override;
+        const std::vector<std::string>& drawing() const override;
 };
 
 #endif /* __PAWN_PIECE_H__ */

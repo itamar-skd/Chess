@@ -20,7 +20,14 @@ std::vector<Position> KnightPiece::all_possible_moves()
     return locations;
 }
 
-const char* KnightPiece::drawing() const
+const std::vector<std::string>& KnightPiece::drawing() const
 {
-    return ""; // TODO!
+    static const std::vector<std::string> art = {
+        "  T\\ ",
+        "  |\\) ",
+        "  {} ",
+        " {__} "
+    };
+
+    return art;
 }

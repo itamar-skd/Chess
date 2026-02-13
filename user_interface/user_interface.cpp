@@ -1,6 +1,7 @@
 #include "user_interface.h"
 #include "game_defines.h"
 #include <ncurses.h>
+#include <cmath>
 
 UserInterface::UserInterface()
     : __manager()
@@ -11,11 +12,34 @@ UserInterface::UserInterface()
 void draw_tile(int y, int x, int color_pair)
 {
     attron(COLOR_PAIR(color_pair));
-    for (int dy = 0; dy < 8; ++dy)
-        for (int dx = 0; dx < 16; ++dx)
-            mvaddwstr(y * 8 + dy, x * 16 + dx, L"■");
+    for (int dy = 0; dy < CHESS_BOARD_CELL_LENGTH; ++dy)
+        for (int dx = 0; dx < CHESS_BOARD_CELL_WIDTH; ++dx)
+            mvaddwstr(y * 8 + dy, x * CHESS_BOARD_CELL_WIDTH+ dx, L"■");
     attroff(COLOR_PAIR(color_pair));
     refresh();
+}
+
+void UserInterface::__draw_piece(size_t x, size_t y)
+{
+    IChessPiece* piece = this->__manager.get_piece(Position(x, y));
+    if (piece != nullptr)
+    {
+        const std::vector<std::string>& art = piece->drawing();
+        size_t num_rows = art.size();
+
+        if (piece->is_enemy())
+            attron(COLOR_PAIR(2));
+
+        for (size_t i = 0; i < num_rows; i++)
+        {
+            size_t num_cols_to_pad = (CHESS_BOARD_CELL_WIDTH - art[i].length()) / 2;
+            size_t start_y = y * CHESS_BOARD_CELL_LENGTH + 7 - (num_rows - i);
+            size_t start_x = x * CHESS_BOARD_CELL_WIDTH + num_cols_to_pad;
+            mvprintw(start_y, start_x, "%s", art[i].c_str());
+        }
+
+        attroff(COLOR_PAIR(2));
+    }
 }
 
 void UserInterface::__draw_board()
@@ -24,21 +48,18 @@ void UserInterface::__draw_board()
     {
         for (int col = 0; col < 8; ++col)
         {
-            IChessPiece* piece = this->__manager.get_piece(Position(col, row));
-            if (piece == nullptr)
-            {
-                if (row % 2 != col % 2)
-                    draw_tile(row, col, 0);
-                else
-                    draw_tile(row, col, 1);
-            }
+            if (row % 2 != col % 2)
+                draw_tile(row, col, 0);
             else
-            {
-                // TODO: Draw piece
-            }
+                draw_tile(row, col, 1);
+
+
+            refresh();
         }
     }
 }
+
+
 
 void UserInterface::initialize()
 {

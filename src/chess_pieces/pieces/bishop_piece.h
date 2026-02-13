@@ -26,7 +26,7 @@ class BishopPiece final : public ChessPieceImpl
          * @brief get a drawing of the piece
          * @returns a string of the piece's drawing
          */
-        const char* drawing() const = 0;
+        const std::vector<std::string>& drawing() const;
 };
 
 #endif /* __BISHOP_PIECE_H__ */

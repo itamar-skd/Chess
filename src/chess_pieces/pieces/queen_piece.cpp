@@ -20,7 +20,16 @@ std::vector<Position> QueenPiece::all_possible_moves()
     return locations;
 }
 
-const char* QueenPiece::drawing() const
+const std::vector<std::string>& QueenPiece::drawing() const
 {
-    return ""; // TODO!
+    static const std::vector<std::string> art = {
+        " _._ ",
+        " ( ) ",
+        " / \\ ",
+        " | | ",
+        " { } ",
+        " {___} "
+    };
+
+    return art;
 }

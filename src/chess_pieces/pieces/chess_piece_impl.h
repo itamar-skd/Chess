@@ -59,7 +59,7 @@ class ChessPieceImpl : public IChessPiece
          * @brief get a drawing of the piece
          * @returns a string of the piece's drawing
          */
-        const char* drawing() const = 0;
+        const std::vector<std::string>& drawing() const = 0;
 
     protected:
         E_ChessPiece _kind;

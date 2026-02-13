@@ -60,7 +60,16 @@ std::vector<Position> KingPiece::all_possible_moves()
     return locations;
 }
 
-const char* KingPiece::drawing() const
+const std::vector<std::string>& KingPiece::drawing() const
 {
-    return ""; // TODO!
+    static const std::vector<std::string> art = {
+        " + ",
+        " ( ) ",
+        " / \\ ",
+        " | | ",
+        " { } ",
+        " {___} "
+    };
+
+    return art;
 }

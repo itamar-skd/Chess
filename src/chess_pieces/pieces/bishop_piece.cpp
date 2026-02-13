@@ -20,7 +20,14 @@ std::vector<Position> BishopPiece::all_possible_moves()
     return locations;
 }
 
-const char* BishopPiece::drawing() const
+const std::vector<std::string>& BishopPiece::drawing() const
 {
-    return ""; // TODO!
+    static const std::vector<std::string> art = {
+        " o ",
+        " (^) ",
+        " -=H=- ",
+        " ] [ ",
+        " /___\\ "
+    };
+    return art;
 }

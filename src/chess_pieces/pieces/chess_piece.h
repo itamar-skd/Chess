@@ -5,6 +5,7 @@
 #include "game_defines.h"
 #include <cstdint>
 #include <vector>
+#include <string>
 
 class IChessPiece
 {
@@ -49,7 +50,7 @@ class IChessPiece
          * @brief get a drawing of the piece
          * @returns a string of the piece's drawing
          */
-        virtual const char* drawing() const = 0;
+        virtual const std::vector<std::string>& drawing() const = 0;
 };
 
 #endif /* __CHESS_PIECE_H__ */

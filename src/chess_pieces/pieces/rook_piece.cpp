@@ -20,7 +20,14 @@ std::vector<Position> RookPiece::all_possible_moves()
     return locations;
 }
 
-const char* RookPiece::drawing() const
+const std::vector<std::string>& RookPiece::drawing() const
 {
-    return ""; // TODO!
+    static const std::vector<std::string> art = {
+        " [UU] ",
+        " || ",
+        " {} ",
+        " {__} "
+    };
+
+    return art;
 }

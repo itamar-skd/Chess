@@ -11,6 +11,7 @@ class UserInterface final
         ~UserInterface() = default;
 
     private:
+        void __draw_piece(size_t x, size_t y);
         void __draw_board();
 
     public:

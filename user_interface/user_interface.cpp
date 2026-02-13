@@ -85,7 +85,7 @@ void UserInterface::__run()
                     if (x > CHESS_BOARD_SIZE || y > CHESS_BOARD_SIZE)
                         continue;
 
-                    bool moved = false;
+                    bool draw_new_tiles = true;
                     IChessPiece* cur_piece = this->__manager.get_piece(cur_pos);
 
                     if (selected && all_drawn_last.size() != 0)
@@ -98,11 +98,9 @@ void UserInterface::__run()
                                 draw_tile(cell.x, cell.y);
                                 this->__draw_piece(cell.x, cell.y);   
                             }
-
-                            moved = true;
                         }
-                        else
-                            continue;
+
+                        draw_new_tiles = false;
                     }
 
                     if (selected)
@@ -119,7 +117,7 @@ void UserInterface::__run()
 
                     all_drawn_last.clear();
 
-                    if (moved)
+                    if (!draw_new_tiles)
                         continue;
 
                     /* draw new tile */

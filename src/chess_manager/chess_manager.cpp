@@ -1,7 +1,6 @@
 #include "chess_manager.h"
 #include "position.h"
 #include <cmath>
-#include <ncurses.h>
 #include <algorithm>
 
 ChessManager::ChessManager()
@@ -78,8 +77,6 @@ std::vector<Position> ChessManager::move(Position from, Position to)
 
             Position rook_pos(from.x + (direction ? -1 : 1), from.y);
             rook->move(rook_pos);
-            mvprintw(1, 0, "hi");
-            refresh();
             this->__pieces[rook_pos.y][rook_pos.x] = std::move(this->__pieces[from.y][from.x + distance_to_rook]);
             changed_cells.push_back(Position(from.x + distance_to_rook, from.y));
             changed_cells.push_back(rook_pos);

@@ -33,8 +33,8 @@ ChessManager::ChessManager()
     this->__pieces[7][2] = std::make_unique<BishopPiece>(Position(2, 7));
     this->__pieces[7][3] = std::make_unique<QueenPiece> (Position(3, 7));
     this->__pieces[7][4] = std::make_unique<KingPiece>  (Position(4, 7));
-    // this->__pieces[7][5] = std::make_unique<BishopPiece>(Position(5, 7));
-    // this->__pieces[7][6] = std::make_unique<KnightPiece>(Position(6, 7));
+    this->__pieces[7][5] = std::make_unique<BishopPiece>(Position(5, 7));
+    this->__pieces[7][6] = std::make_unique<KnightPiece>(Position(6, 7));
     this->__pieces[7][7] = std::make_unique<RookPiece>  (Position(7, 7));
 
     for (int x = 0; x < CHESS_BOARD_SIZE; ++x) {

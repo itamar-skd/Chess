@@ -108,6 +108,12 @@ std::vector<Position> ChessManager::all_possible_moves(Position pos) const
     for (std::vector<Position>::iterator it = moves.begin(); it != moves.end();)
     {
         IChessPiece* move_piece = this->__pieces[it->y][it->x].get();
+        if (move_piece != nullptr && move_piece->is_enemy() == piece->is_enemy())
+        {
+            moves.erase(it);
+            continue;
+        }
+
         if (piece->kind() == E_ChessPiece::PAWN)
         {
             if (it->x == pos.x)
@@ -135,6 +141,10 @@ std::vector<Position> ChessManager::all_possible_moves(Position pos) const
                     continue;
                 }
             }
+        }
+        else if (piece->kind() == E_ChessPiece::QUEEN)
+        {
+            // IMPORTANT TODO: Currently not handling jumping over other pieces...
         }
         else if (piece->kind() == E_ChessPiece::KING)
         {

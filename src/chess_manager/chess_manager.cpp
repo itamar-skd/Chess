@@ -96,9 +96,23 @@ std::vector<Position> ChessManager::move(Position from, Position to)
     return changed_cells;
 }
 
+static inline Direction __get_direction(Position from, Position to)
+{
+    Direction dir(0, 0);
+    static int i = 0;
+    if (from.x != to.x)
+        dir.x = ((to.x - from.x) > 0) ? 1 : -1;
+
+    /* y values go from low to high*/
+    if (from.y != to.y)
+        dir.y = ((to.y - from.y) > 0) ? 1 : -1;
+
+    return dir;
+}
 std::vector<Position> ChessManager::all_possible_moves(Position pos) const
 {
     std::vector<Position> moves;
+
     if (pos.x > CHESS_BOARD_SIZE || pos.y >= CHESS_BOARD_SIZE)
         return moves;
 
@@ -142,9 +156,31 @@ std::vector<Position> ChessManager::all_possible_moves(Position pos) const
                 }
             }
         }
-        else if (piece->kind() == E_ChessPiece::QUEEN)
+        else if (piece->kind() == E_ChessPiece::QUEEN || piece->kind() == E_ChessPiece::ROOK)
         {
-            // IMPORTANT TODO: Currently not handling jumping over other pieces...
+            Direction direction_move_to_piece = __get_direction(pos, *it) * -1;
+            Position copy_it = *it;
+            copy_it += direction_move_to_piece;
+            bool found_piece = false;
+            while (copy_it.x != pos.x || copy_it.y != pos.y)
+            {
+                if (copy_it.x >= CHESS_BOARD_SIZE || copy_it.y >= CHESS_BOARD_SIZE)
+                    break;
+                
+                if (this->__pieces[copy_it.y][copy_it.x] != nullptr)
+                {
+                    found_piece = true;
+                    break;
+                }
+
+                copy_it += direction_move_to_piece;
+            }
+
+            if (found_piece)
+            {
+                moves.erase(it);
+                continue;
+            }
         }
         else if (piece->kind() == E_ChessPiece::KING)
         {

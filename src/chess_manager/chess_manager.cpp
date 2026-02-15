@@ -156,7 +156,7 @@ std::vector<Position> ChessManager::all_possible_moves(Position pos) const
                 }
             }
         }
-        else if (piece->kind() == E_ChessPiece::QUEEN || piece->kind() == E_ChessPiece::ROOK)
+        else if (piece->kind() == E_ChessPiece::QUEEN || piece->kind() == E_ChessPiece::ROOK || piece->kind() == E_ChessPiece::BISHOP)
         {
             Direction direction_move_to_piece = __get_direction(pos, *it) * -1;
             Position copy_it = *it;

@@ -2,7 +2,6 @@
 #include "position.h"
 #include <cmath>
 #include <algorithm>
-#include <ncurses.h>
 
 ChessManager::ChessManager()
 {
@@ -102,15 +101,11 @@ static inline Direction __get_direction(Position from, Position to)
     Direction dir(0, 0);
     static int i = 0;
     if (from.x != to.x)
-    {
-        if (i++ == 0)
-            mvprintw(35, 0, "from.x: %d, from.y: %d, to.x: %d, to.y: %d", from.x, from.y, to.x, to.y);
-        dir.x = ((from.x - to.x) > 0) ? 1 : -1;
-    }
+        dir.x = ((to.x - from.x) > 0) ? 1 : -1;
 
     /* y values go from low to high*/
     if (from.y != to.y)
-        dir.y = ((to.y - from.y) > 0) ? -1 : 1;
+        dir.y = ((to.y - from.y) > 0) ? 1 : -1;
 
     return dir;
 }
@@ -164,23 +159,21 @@ std::vector<Position> ChessManager::all_possible_moves(Position pos) const
         else if (piece->kind() == E_ChessPiece::QUEEN)
         {
             Direction direction_move_to_piece = __get_direction(pos, *it) * -1;
-            static int i = 0;
-            mvprintw(i++, 0, "x: %d, y: %d", it->x, it->y);
-            mvprintw(i++, 0, "x: %d, y: %d", direction_move_to_piece.x, direction_move_to_piece.y);
-            refresh();
             Position copy_it = *it;
+            copy_it += direction_move_to_piece;
             bool found_piece = false;
             while (copy_it.x != pos.x || copy_it.y != pos.y)
             {
-                copy_it += direction_move_to_piece;
                 if (copy_it.x >= CHESS_BOARD_SIZE || copy_it.y >= CHESS_BOARD_SIZE)
                     break;
-
+                
                 if (this->__pieces[copy_it.y][copy_it.x] != nullptr)
                 {
                     found_piece = true;
                     break;
                 }
+
+                copy_it += direction_move_to_piece;
             }
 
             if (found_piece)
